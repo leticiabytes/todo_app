@@ -6,7 +6,40 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: tdBGColor, appBar: _buildAppBar());
+    return Scaffold(
+      backgroundColor: tdBGColor,
+      appBar: _buildAppBar(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [searchBox()],
+        ),
+      ),
+    );
+  }
+
+  Widget searchBox() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(20)),
+      child: const TextField(
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(0),
+            prefixIcon: Icon(
+              Icons.search,
+              color: tdBlack,
+              size: 20,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              maxHeight: 20,
+              minWidth: 26,
+            ),
+            border: InputBorder.none,
+            hintText: 'Search',
+            hintStyle: TextStyle(color: tdGrey)),
+      ),
+    );
   }
 
   AppBar _buildAppBar() {

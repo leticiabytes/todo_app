@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
+import '../models/todo.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  final todosList = ToDo.todoList();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,10 @@ class Home extends StatelessWidget {
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                   ),
                 ),
-                const TodoItem(),
+                for (ToDo todo in todosList)
+                  TodoItem(
+                    todo: todo,
+                  ),
               ],
             ))
           ],

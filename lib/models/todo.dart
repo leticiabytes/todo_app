@@ -13,6 +13,9 @@ class ToDo {
     return [
       ToDo(id: '01', description: 'Lorem ipsum dot a met', isDone: false),
       ToDo(id: '02', description: 'Lorem ipsum dot a met', isDone: true),
+      ToDo(id: '03', description: 'Lorem ipsum dot a met', isDone: true),
+      ToDo(id: '04', description: 'Lorem ipsum dot a met', isDone: false),
+      ToDo(id: '05', description: 'Lorem ipsum dot a met', isDone: true),
     ];
   }
 }

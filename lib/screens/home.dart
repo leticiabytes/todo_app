@@ -12,6 +12,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final todosList = ToDo.todoList();
+  final _todoController = TextEditingController();
+  List<ToDo> _searchToDo = [];
+
+  @override
+  void initState() {
+    _searchToDo = todosList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +34,7 @@ class _HomeState extends State<Home> {
               searchBox(),
               Expanded(
                   child: ListView(
+                padding: const EdgeInsetsDirectional.only(top: 0, bottom: 60),
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 50, bottom: 20),
@@ -35,11 +44,11 @@ class _HomeState extends State<Home> {
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  for (ToDo todo in todosList)
+                  for (ToDo todo in _searchToDo)
                     TodoItem(
                       todo: todo,
                       onToDoChanged: _handleChangeToDo,
-                      onDeleteItem: () {},
+                      onDeleteItem: _handleDeleteitem,
                     ),
                 ],
               ))
@@ -64,8 +73,9 @@ class _HomeState extends State<Home> {
                           spreadRadius: 0.0)
                     ],
                     borderRadius: BorderRadius.circular(10)),
-                child: const TextField(
-                  decoration: InputDecoration(
+                child: TextField(
+                  controller: _todoController,
+                  decoration: const InputDecoration(
                       hintText: 'Add item', border: InputBorder.none),
                 ),
               ),
@@ -73,7 +83,9 @@ class _HomeState extends State<Home> {
             Container(
               margin: const EdgeInsets.only(bottom: 20, right: 20),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _handleAddItem(_todoController.text);
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: tdBlue,
                     minimumSize: const Size(60, 60),
@@ -93,12 +105,46 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _handleDeleteitem(String id) {
+    setState(() {
+      todosList.removeWhere((item) => item.id == id);
+    });
+  }
+
+  void _handleAddItem(String toDo) {
+    setState(() {
+      todosList.add(ToDo(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          description: toDo));
+    });
+    _todoController.clear();
+  }
+
+  void _handleSearchItem(String enterdKeyword) {
+    List<ToDo> results = [];
+
+    if (enterdKeyword.isEmpty) {
+      results = todosList;
+    } else {
+      results = todosList
+          .where((item) => item.description!
+              .toLowerCase()
+              .contains(enterdKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _searchToDo = results;
+    });
+  }
+
   Widget searchBox() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
-      child: const TextField(
+      child: TextField(
+        onChanged: (value) => _handleSearchItem(value),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(0),
             prefixIcon: Icon(

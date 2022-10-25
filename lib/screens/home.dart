@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
               searchBox(),
               Expanded(
                   child: ListView(
+                padding: const EdgeInsetsDirectional.only(top: 0, bottom: 60),
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 50, bottom: 20),

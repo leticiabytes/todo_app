@@ -4,7 +4,7 @@ import '../widgets/todo_item.dart';
 import '../models/todo.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -145,7 +145,7 @@ class _HomeState extends State<Home> {
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: TextField(
         onChanged: (value) => _handleSearchItem(value),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             contentPadding: EdgeInsets.all(0),
             prefixIcon: Icon(
               Icons.search,
@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
           width: 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.asset('assets/images/avatar.jpeg'),
+            child: Image.asset('assets/images/bighead.png'),
           ),
         ),
       ]),
